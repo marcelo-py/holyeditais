@@ -1,0 +1,65 @@
+{%extends 'base.html'%}
+{%block 'titulo'%}Editais-Pagina Inicial{%endblock%}
+
+{%block 'conteudo'%}
+    <header>
+        <a href="{%url 'index'%}"><h1>HOLY EDITAIS</h1></a>
+        <nav>
+            <ul class="menu">
+                <li><a href="#">Sobre</a></li>
+                <li><a href="#">Github</a></li>
+                <li><a href="#">Contatos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-cotainer">
+        <div>
+            <h2>Editais</h2>
+            <section class="container-editais">
+                {%for dado in dados%}
+                    <div>
+                        {%for chave, valor in dado.items%}
+                            {%if not chave == 'titulo'%}
+                                <strong>{{chave}}</strong>
+                            {%endif%}
+                            {%if chave == 'titulo'%}
+                                <h2>{{valor}}</h2>
+                                {%else%}
+                                <p>{{valor}}</p>
+                            {%endif%} 
+                        {%endfor%}
+                    </div>
+                {%endfor%} 
+            </section>
+        </div>
+        
+        <div class="main-container-msg">
+            <section class="container-menssagens">
+                {%for menssagem in menssagens%}
+                    <div class="rows-menssagens">
+                        <p>
+                            <span class="menssagem-usuario">{{menssagem.usuario}}</span>:
+                            {{menssagem.menssagem}}
+                            {%if menssagem.edital is not None%}
+                                <span class="menssagem-edital">
+                                    <strong>falando sobre: </strong>{{menssagem.edital}}
+                                </span>
+                            {%endif%}
+                        </p>
+                    </div>
+                {%endfor%}
+            </section>
+            <form action="{%url 'index'%}" method="POST" class="form-menssagem">
+                {% csrf_token %}
+                <div class="container">
+                    {{form}}
+                    <button type="submit">ENVIAR</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer class="footer">
+        <p>&copy; 2022 MARCELO</p>
+    </footer>
+{%endblock%}
